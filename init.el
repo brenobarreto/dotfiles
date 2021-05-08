@@ -45,13 +45,27 @@
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
+
 ;; -------------------------------------
+
+;; GLOBAL KEYBINDINGS
+
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+;; -------------------------------------
+
+;; INITIALIZATION SETUP
+
+(desktop-save-mode 1)
+
+;; -------------------------------------
+
 
 ;; CLOJURE LSP
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
-(package-initialize)
+;(package-initialize)
 
 (setq package-selected-packages '(clojure-mode lsp-mode cider lsp-treemacs flycheck company))
 
@@ -73,14 +87,10 @@
       ; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
       )
 
-(setq lsp-clojure-custom-server-command '("bash" "-c" "/usr/local/bin/clojure-lsp"))
-
 (use-package lsp-mode
   :ensure t
   :hook ((clojure-mode . lsp))
   :commands lsp
-  :custom
-  ((lsp-clojure-server-command '("java" "-jar" "/home/user/clj-kondo/clj-kondo-lsp-server.jar")))
   :config
   (dolist (m '(clojure-mode
                clojurescript-mode))
@@ -158,8 +168,6 @@
  ;; If there is more than one, they won't work right.
  '(cider-lein-command "/usr/local/bin/lein")
  '(global-display-line-numbers-mode t)
- '(lsp-clojure-custom-server-command
-   '("java" "-jar" "/home/user/clj-kondo/clj-kondo-lsp-server.jar") nil nil "Customized with use-package lsp-mode")
  '(package-selected-packages
    '(rg projectile-ripgrep ripgrep flycheck-clj-kondo ag clj-refactor cider zerodark-theme magit ivy-rich diminish auto-package-update use-package dracula-theme doom-modeline-now-playing counsel)))
 (custom-set-faces

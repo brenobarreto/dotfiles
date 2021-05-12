@@ -34,16 +34,13 @@
 
 ;; LOOKS
 
-(use-package zerodark-theme
-  :ensure t
-  :init
-    (load-theme 'zerodark t))
+(load-theme 'zenburn t)
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (toggle-scroll-bar -1)
 
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+;(global-set-key (kbd "C-/") 'comment-region)
 
 
 ;; -------------------------------------
@@ -161,21 +158,45 @@
   :hook ((clojure-mode . paredit-mode)
          (emacs-lisp-mode . paredit-mode)))
 
+; Remove old paredit bindings
+;(defun take-from-list (condp list)
+;  "Returns elements in list satisfying condp"
+;  (delq nil
+;    (mapcar (lambda (x) (and (funcall condp x) x)) list)))
+;(setq minor-mode-map-alist 
+;      (take-from-list 
+;        (lambda (x) (not (eq (car x) 'paredit-mode))) 
+;        minor-mode-map-alist))
+
+; Create new paredit-mode-map
+;(setq paredit-mode-map (make-sparse-keymap))
+;(define-key paredit-mode-map (kbd "<s-right>") 'paredit-forward-slurp-sexp)
+;(define-key paredit-mode-map (kbd "<s-left>") 'paredit-forward-barf-sexp)
+
+; Add the new paredit-mode-map to minor-mode-map-alist
+;(setq minor-mode-map-alist (append
+;                (list (append (list 'paredit-mode) paredit-mode-map))
+;                minor-mode-map-alist))
+
+;; -------------------------------------------------
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(cider-lein-command "/usr/local/bin/lein")
+ '(custom-safe-themes
+   '("e208e45345b91e391fa66ce028e2b30a6aa82a37da8aa988c3f3c011a15baa22" "bc4c89a7b91cfbd3e28b2a8e9e6750079a985237b960384f158515d32c7f0490" "3d5ef3d7ed58c9ad321f05360ad8a6b24585b9c49abcee67bdcbb0fe583a6950" "191bc4e53173f13e9b827272fa39be59b7295a0593b9f070deb6cb7c3745fd1d" "e6df46d5085fde0ad56a46ef69ebb388193080cc9819e2d6024c9c6e27388ba9" default))
  '(global-display-line-numbers-mode t)
  '(package-selected-packages
-   '(rg projectile-ripgrep ripgrep flycheck-clj-kondo ag clj-refactor cider zerodark-theme magit ivy-rich diminish auto-package-update use-package dracula-theme doom-modeline-now-playing counsel)))
+   '(treemacs-projectile rebecca-theme zenburn-theme zone-nyan sublime-themes base16-theme rainbow-delimiters rg projectile-ripgrep ripgrep flycheck-clj-kondo ag clj-refactor cider zerodark-theme magit ivy-rich diminish auto-package-update use-package dracula-theme doom-modeline-now-playing counsel)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:background nil)))))
 
 (setq inhibit-startup-message t)
 
@@ -221,4 +242,11 @@ apps are not started from a shell."
 (defadvice split-window-horizontally (after rebalance-windows activate)
   (balance-windows))
 (ad-activate 'split-window-horizontally)
+
+
+;; --------------------
+
+;; RAINBOW DELIMITERS AS DEFAULT FOR PROGRAMMING LANGUAGE MODES
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
 

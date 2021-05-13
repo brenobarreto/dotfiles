@@ -48,6 +48,8 @@
 ;; GLOBAL KEYBINDINGS
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-<down-mouse-1>") 'lsp-find-definition-mouse)
+(global-set-key (kbd "C-h") 'lsp-find-definition)
 
 ;; -------------------------------------
 
@@ -73,6 +75,10 @@
 (add-hook 'clojure-mode-hook 'lsp)
 (add-hook 'clojurescript-mode-hook 'lsp)
 (add-hook 'clojurec-mode-hook 'lsp)
+(add-hook 'cider-repl-mode-hook #'paredit-mode)
+(add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode)
+
+(setq cider-save-file-on-load t)
 
 (setq gc-cons-threshold (* 100 1024 1024)
       read-process-output-max (* 1024 1024)
@@ -92,6 +98,8 @@
   (dolist (m '(clojure-mode
                clojurescript-mode))
     (add-to-list 'lsp-language-id-configuration `(,m . "clojure"))))
+
+(show-paren-mode 1)
   
 ;; -------------------------------------
 
@@ -186,8 +194,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(cider-lein-command "/usr/local/bin/lein")
+ '(cider-repl-display-help-banner nil)
  '(custom-safe-themes
    '("e208e45345b91e391fa66ce028e2b30a6aa82a37da8aa988c3f3c011a15baa22" "bc4c89a7b91cfbd3e28b2a8e9e6750079a985237b960384f158515d32c7f0490" "3d5ef3d7ed58c9ad321f05360ad8a6b24585b9c49abcee67bdcbb0fe583a6950" "191bc4e53173f13e9b827272fa39be59b7295a0593b9f070deb6cb7c3745fd1d" "e6df46d5085fde0ad56a46ef69ebb388193080cc9819e2d6024c9c6e27388ba9" default))
+ '(debug-on-error t)
  '(global-display-line-numbers-mode t)
  '(package-selected-packages
    '(treemacs-projectile rebecca-theme zenburn-theme zone-nyan sublime-themes base16-theme rainbow-delimiters rg projectile-ripgrep ripgrep flycheck-clj-kondo ag clj-refactor cider zerodark-theme magit ivy-rich diminish auto-package-update use-package dracula-theme doom-modeline-now-playing counsel)))
@@ -248,5 +258,4 @@ apps are not started from a shell."
 
 ;; RAINBOW DELIMITERS AS DEFAULT FOR PROGRAMMING LANGUAGE MODES
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-
 

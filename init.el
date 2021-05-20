@@ -59,6 +59,11 @@
 
 ;; -------------------------------------
 
+;; DISABLE AUTO-SAVE
+
+(setq auto-save-default nil)
+
+;; -------------------------------------
 
 ;; CLOJURE LSP
 
@@ -77,6 +82,10 @@
 (add-hook 'clojurec-mode-hook 'lsp)
 (add-hook 'cider-repl-mode-hook #'paredit-mode)
 (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode)
+
+;; Make Cider recognize defflow
+(add-hook 'cider-repl-mode-hook (lambda ()
+                             (add-to-list 'cider-test-defining-forms "defflow" "defflow-loopback-false")))
 
 (setq cider-save-file-on-load t)
 
@@ -258,4 +267,3 @@ apps are not started from a shell."
 
 ;; RAINBOW DELIMITERS AS DEFAULT FOR PROGRAMMING LANGUAGE MODES
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-

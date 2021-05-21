@@ -50,6 +50,27 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-<down-mouse-1>") 'lsp-find-definition-mouse)
 (global-set-key (kbd "C-h") 'lsp-find-definition)
+;(global-set-key (kbd "<C-right>") 'paredit-forward-slurp-sexp)
+;(global-set-key (kbd "<C-left>") 'paredit-forward-barf-sexp)
+;(global-set-key (kbd "C-x <left>") 'pop-tag-mark)
+
+;; -------------------------------------
+
+;; NAVIGATE BACKWARD AND FORWARD
+
+(use-package backward-forward
+  :demand
+  :config
+  (backward-forward-mode t)
+  :bind (:map backward-forward-mode-map
+              ("<C-left>" . nil)
+              ("<C-right>" . nil)
+              ("<M-left>" . backward-forward-previous-location)
+              ("<M-right>" . backward-forward-next-location)))
+
+;; DELETES SELECTED AREA
+
+(delete-selection-mode 1)
 
 ;; -------------------------------------
 
@@ -59,9 +80,10 @@
 
 ;; -------------------------------------
 
-;; DISABLE AUTO-SAVE
+;; DISABLE AUTO BACKUP AND AUTO-SAVE
 
 (setq auto-save-default nil)
+(setq make-backup-files nil)
 
 ;; -------------------------------------
 
@@ -202,6 +224,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(better-jumper-mode t)
  '(cider-lein-command "/usr/local/bin/lein")
  '(cider-repl-display-help-banner nil)
  '(custom-safe-themes
@@ -209,7 +232,7 @@
  '(debug-on-error t)
  '(global-display-line-numbers-mode t)
  '(package-selected-packages
-   '(treemacs-projectile rebecca-theme zenburn-theme zone-nyan sublime-themes base16-theme rainbow-delimiters rg projectile-ripgrep ripgrep flycheck-clj-kondo ag clj-refactor cider zerodark-theme magit ivy-rich diminish auto-package-update use-package dracula-theme doom-modeline-now-playing counsel)))
+   '(evil evil-extra-operator better-jumper backward-forward command-log-mode treemacs-projectile rebecca-theme zenburn-theme zone-nyan sublime-themes base16-theme rainbow-delimiters rg projectile-ripgrep ripgrep flycheck-clj-kondo ag clj-refactor cider zerodark-theme magit ivy-rich diminish auto-package-update use-package dracula-theme doom-modeline-now-playing counsel)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -267,3 +290,4 @@ apps are not started from a shell."
 
 ;; RAINBOW DELIMITERS AS DEFAULT FOR PROGRAMMING LANGUAGE MODES
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
